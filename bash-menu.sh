@@ -161,7 +161,9 @@ menu_HighlightItem() {
     local top=$((menuTop+item+2))
     local menuText=${menuItems[$item]}
 
-    drawHighlightAt $top $menuLeft " -> $menuText"
+    [[ $DONOTCLEAR != "" ]] && menuText=" -> $menuText"
+
+    drawHighlightAt $top $menuLeft "$menuText"
 }
 
 
