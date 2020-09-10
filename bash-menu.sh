@@ -121,6 +121,7 @@ menu_Display() {
     local menuEnd=$((menuSize+menuTop+1))
 
     drawClear
+
     drawColour $menuColour $menuHighlight
 
     # Menu header
@@ -128,7 +129,7 @@ menu_Display() {
 
     # Menu (side) borders
     for row in $(seq 1 $menuSize); do
-        drawSpecial "$menuBorderText" 1
+        [[ $DONOTCLEAR == "" ]] && drawSpecial "$menuBorderText" 1
     done
 
     # Menu footer
@@ -160,7 +161,7 @@ menu_HighlightItem() {
     local top=$((menuTop+item+2))
     local menuText=${menuItems[$item]}
 
-    drawHighlightAt $top $menuLeft "$menuText"
+    drawHighlightAt $top $menuLeft " -> $menuText"
 }
 
 
@@ -177,8 +178,8 @@ menu_HandleInput() {
     [[ $before -lt 0 ]] && before=$menuLastItem
 
     # Clear highlight from prev/next menu items
-    menu_ClearItem $before
-    menu_ClearItem $after
+    [[ $DONOTCLEAR == "" ]] && menu_ClearItem $before
+    [[ $DONOTCLEAR == "" ]] && menu_ClearItem $after
 
     # Highlight current menu item
     menu_HighlightItem $choice

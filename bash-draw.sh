@@ -45,11 +45,13 @@ DRAW_COL_GRAY=37
 
 # drawClear()
 drawClear() {
+    [[ $DONOTCLEAR != "" ]] && return ;
     $ESC_WRITE "\033c"
 }
 
 # drawColour(colour = DRAW_COL_DEF, bgColour = DRAW_COL_DEF)
 drawColour() {
+    [[ $DONOTCLEAR != "" ]] && return ;
     local colour=$DRAW_COL_DEF
     local bgColour=$((DRAW_COL_DEF+10))
 
@@ -66,6 +68,7 @@ drawColour() {
 
 # drawPlain(text, newLine = 0)
 drawPlain() {
+    [[ $DONOTCLEAR != "" ]] && echo "$1" && return ;
     if [[ -z "$2" || "$2" -eq 0 ]]; then
         $ESC_WRITE "$1"
     else
@@ -118,21 +121,26 @@ ESC_ECHO='echo -e'
 
 # Move cursor to specified location
 draw_MoveTo() {
+    [[ $DONOTCLEAR != "" ]] && return ;
     $ESC_WRITE "\033[${1};${2}H"
 }
 
 draw_StartHighlight() {
+    [[ $DONOTCLEAR != "" ]] && return ;
     $ESC_WRITE "\033[7m"
 }
 
 draw_EndHighlight() {
+    [[ $DONOTCLEAR != "" ]] && return ;
     $ESC_WRITE "\033[27m"
 }
 
 draw_SetDrawMode() {
+    [[ $DONOTCLEAR != "" ]] && return ;
     $ESC_WRITE "\033%@\033(0"
 }
 
 draw_SetWriteMode() {
+    [[ $DONOTCLEAR != "" ]] && return ;
     $ESC_WRITE "\033(B"
 }
