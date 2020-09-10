@@ -127,6 +127,9 @@ menuLoop
 
 The `menuLoop` function will continue until a menu item is selected which returns `0` - at which time the screen is cleared and control returns to the next line in your script.
 
+### Extra options
+
+`DONOTCLEAR="yes"` will enable no color and screen cleaning mode
 
 ## Versioning
 
